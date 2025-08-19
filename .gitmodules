@@ -1,0 +1,3 @@
+[submodule "thridparty/glm"]
+	path = thridparty/glm
+	url = https://github.com/icaven/glm
