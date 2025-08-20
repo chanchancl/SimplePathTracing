@@ -19,9 +19,26 @@ public:
 int main() {
   ThreadPool pool{};
   Film film(800, 450);
+  Camera camera{film, {0, 0, 1}, {0, 0, 0}, 90};
 
-  pool.parallelFor(
-      200, 100, [&](auto x, auto y) { film.setPixel(x, y, {0.6, 0.7, 0.2}); });
+  Sphere sphere{{0, 0, 0}, 0.5f};
+
+  glm::vec3 light_pos{1, 1, 1};
+
+  printf("%lld, %lld\n", film.getWidth(), film.getHeight());
+  pool.parallelFor(film.getWidth(), film.getHeight(), [&](auto x, auto y) {
+    // cout << x << ' ' << y << endl;
+    auto ray = camera.generateRay({x, y});
+    auto result = sphere.intersect(ray);
+    if (result.has_value()) {
+      auto hit_point = ray.hit(result.value());
+      auto normal = glm::normalize(hit_point - sphere.center);
+      auto L = glm::normalize(light_pos - hit_point);
+      auto cosine = glm::max(0.f, glm::dot(L, normal));
+
+      film.setPixel(x, y, {cosine, cosine, cosine});
+    }
+  });
 
   pool.wait();
 
