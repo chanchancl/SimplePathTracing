@@ -36,8 +36,6 @@ int main() {
   scene.addShape(&sphere, {0, 0, 1.5}, {0.3, 0.3, 0.3});
   scene.addShape(&plane, {0, -0.5, 0});
 
-  Shape &shape = model;
-
   Camera camera{film, {-1.6, 0, 0}, {0, 0, 0}, 90};
   glm::vec3 light_pos{-1, 2, 1};
 
@@ -45,7 +43,7 @@ int main() {
   pool.parallelFor(film.getWidth(), film.getHeight(), [&](auto x, auto y) {
     // cout << x << ' ' << y << endl;
     auto ray = camera.generateRay({x, y});
-    auto hit_info = shape.intersect(ray, 0, 1e10);
+    auto hit_info = scene.intersect(ray);
     if (hit_info.has_value()) {
       auto L = glm::normalize(light_pos - hit_info->hit_point);
       auto cosine = glm::max(0.f, glm::dot(hit_info->normal, L));
