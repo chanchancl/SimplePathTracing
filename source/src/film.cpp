@@ -1,8 +1,10 @@
 
 #include "film.hpp"
+
+#include <fstream>
+
 #include "glm/common.hpp"
 #include "glm/fwd.hpp"
-#include <fstream>
 
 Film::Film(size_t width, size_t height) : width(width), height(height) {
   pixels.resize(width * height);

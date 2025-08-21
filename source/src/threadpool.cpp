@@ -1,7 +1,9 @@
+
 #include "threadpool.hpp"
-#include "spinlock.hpp"
 
 #include <thread>
+
+#include "spinlock.hpp"
 
 void ThreadPool::runTask(ThreadPool *master) {
   while (master->alive) {
@@ -18,9 +20,7 @@ void ThreadPool::runTask(ThreadPool *master) {
 ThreadPool::ThreadPool(size_t thread_count) {
   alive = true;
   pending_count = 0;
-  if (thread_count == 0) {
-    thread_count = std::thread::hardware_concurrency();
-  }
+  if (thread_count == 0) { thread_count = std::thread::hardware_concurrency(); }
 
   for (size_t i = 0; i < thread_count; i++) {
     threads.push_back(std::thread(ThreadPool::runTask, this));
@@ -30,22 +30,20 @@ ThreadPool::ThreadPool(size_t thread_count) {
 ThreadPool::~ThreadPool() {
   wait();
   alive = false;
-  for (size_t i = 0; i < threads.size(); i++) {
-    threads[i].join();
-  }
+  for (size_t i = 0; i < threads.size(); i++) { threads[i].join(); }
   threads.clear();
 }
 
 void ThreadPool::addTask(Task *task) {
   Guard guard(spinlock);
-  tasks.push(task);
+
   pending_count++;
+  tasks.push(task);
 }
 Task *ThreadPool::getTask() {
   Guard guard(spinlock);
 
-  if (tasks.empty())
-    return nullptr;
+  if (tasks.empty()) return nullptr;
 
   Task *ret = tasks.front();
   tasks.pop();
@@ -63,16 +61,14 @@ struct ParallelForTask : public Task {
 
 void ThreadPool::parallelFor(size_t width, size_t height,
                              const ParallelFunction &fun) {
-  Guard guard(spinlock);
   for (size_t y = 0; y < height; y++) {
     for (size_t x = 0; x < width; x++) {
       // printf("Add task (%lld, %lld)\n", x, y);
-      tasks.push(new ParallelForTask(x, y, fun));
+      addTask(new ParallelForTask(x, y, fun));
     }
   }
 }
 
 void ThreadPool::wait() const {
-  while (!tasks.empty() && pending_count > 0)
-    std::this_thread::yield();
+  while (!tasks.empty() && pending_count > 0) std::this_thread::yield();
 }
