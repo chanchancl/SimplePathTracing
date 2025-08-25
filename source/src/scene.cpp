@@ -4,13 +4,12 @@
 #include "glm/trigonometric.hpp"
 #include "ray.hpp"
 
-std::optional<HitInfo> Scene::intersect(const Ray &ray, float t_min,
-                                        float t_max) const {
+std::optional<HitInfo> Scene::intersect(const Ray &ray, float t_min, float t_max) const {
   std::optional<HitInfo> closest_hit_info{};
   const ShapeInstance *closest_instance = nullptr;
   for (const auto &instance : instances) {
     auto ray_object = ray.objectFromWorld(instance.object_from_world);
-    auto hit_info = instance.shape->intersect(ray_object, t_min, t_max);
+    auto hit_info = instance.shape.intersect(ray_object, t_min, t_max);
     if (hit_info.has_value()) {
       closest_hit_info = hit_info;
       t_max = hit_info->t;
@@ -19,30 +18,26 @@ std::optional<HitInfo> Scene::intersect(const Ray &ray, float t_min,
   }
 
   if (closest_instance) {
-    closest_hit_info->hit_point = closest_instance->world_from_object
-                                  * glm::vec4(closest_hit_info->hit_point, 1);
+    closest_hit_info->hit_point = closest_instance->world_from_object * glm::vec4(closest_hit_info->hit_point, 1);
     // Mn = [M^-1]T
     // M    = world_from_object
     // M^-1 = object_from_world
     // Mn   = [object_from_world]T
     closest_hit_info->normal = glm::normalize(
-        glm::vec3(glm::transpose(closest_instance->object_from_world)
-                  * glm::vec4(closest_hit_info->normal, 0)));
+        glm::vec3(glm::transpose(closest_instance->object_from_world) * glm::vec4(closest_hit_info->normal, 0)));
+    closest_hit_info->material = &closest_instance->material;
   }
 
   return closest_hit_info;
 }
 
-void Scene::addShape(Shape *shape, const glm::vec3 &pos, const glm::vec3 &scale,
-                     const glm::vec3 &rotate) {
-  glm::mat4 world_from_obj = glm::translate(glm::mat4(1.f), pos)
-                             * glm::rotate(glm::mat4(1.f),
-                                           glm::radians(rotate.z), {0, 0, 1})
-                             * glm::rotate(glm::mat4(1.f),
-                                           glm::radians(rotate.y), {0, 1, 0})
-                             * glm::rotate(glm::mat4(1.f),
-                                           glm::radians(rotate.x), {1, 0, 0})
-                             * glm::scale(glm::mat4(1.f), scale);
-  instances.push_back(
-      ShapeInstance{shape, world_from_obj, glm::inverse(world_from_obj)});
+void Scene::addShape(Shape &shape, const Material &material, const glm::vec3 &pos, const glm::vec3 &scale, const glm::vec3 &rotate) {
+  glm::mat4 world_from_obj =
+      glm::translate(glm::mat4(1.f), pos) *
+      glm::rotate(glm::mat4(1.f), glm::radians(rotate.z), {0, 0, 1}) *
+      glm::rotate(glm::mat4(1.f), glm::radians(rotate.y), {0, 1, 0}) *
+      glm::rotate(glm::mat4(1.f), glm::radians(rotate.x), {1, 0, 0}) *
+      glm::scale(glm::mat4(1.f), scale);
+
+  instances.push_back(ShapeInstance{shape, material, world_from_obj, glm::inverse(world_from_obj)});
 }

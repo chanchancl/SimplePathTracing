@@ -1,10 +1,9 @@
 
 #include "film.hpp"
+#include "rgb.hpp"
 
+#include <cstdint>
 #include <fstream>
-
-#include "glm/common.hpp"
-#include "glm/fwd.hpp"
 
 Film::Film(size_t width, size_t height) : width(width), height(height) {
   pixels.resize(width * height);
@@ -19,13 +18,17 @@ void Film::save(const std::filesystem::path &path) {
   // 255, 255, 255
   // ...
   std::ofstream file(path, std::ios::binary);
-  file << "P6\n" << width << " " << height << "\n255\n";
+  file << "P6\n"
+       << width << " " << height << "\n255\n";
 
   for (size_t y = 0; y < height; y++) {
     for (size_t x = 0; x < width; x++) {
-      const auto p = getPixel(x, y);
-      const glm::u8vec3 pi = glm::clamp(p * 255.f, 0.f, 255.f);
-      file << pi.x << pi.y << pi.z;
+      const auto pixel = getPixel(x, y);
+      RGB rgb(pixel.color / static_cast<float>(pixel.sample_count));
+      // printf("%.2f, %.2f, %.2f -> %3d, %3d, %3d\n", p.r, p.g, p.b, rgb.r, rgb.g, rgb.b);
+      file << static_cast<uint8_t>(rgb.r)
+           << static_cast<uint8_t>(rgb.g)
+           << static_cast<uint8_t>(rgb.b);
     }
   }
 }

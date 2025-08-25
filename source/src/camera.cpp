@@ -8,14 +8,13 @@
 
 #include "ray.hpp"
 
-Camera::Camera(Film &film, const glm::vec3 &pos, const glm::vec3 &viewpoint,
-               float fovy)
+Camera::Camera(Film &film, const glm::vec3 &pos, const glm::vec3 &viewpoint, float fovy)
     : film(film), pos(pos) {
   camera_from_clip = glm::inverse(
       glm::perspective(glm::radians(fovy),
-                       static_cast<float>(film.getWidth())
-                           / static_cast<float>(film.getHeight()),
-                       1.f, 2.f));
+                       static_cast<float>(film.getWidth()) / static_cast<float>(film.getHeight()),
+                       1.f,
+                       2.f));
   world_from_camera = glm::inverse(glm::lookAt(pos, viewpoint, {0, 1, 0}));
 }
 
@@ -25,8 +24,7 @@ Ray Camera::generateRay(const glm::ivec2 &pixel_coord,
   // y [ 0, height] -> [ 0, 1]
   // pc + offset, move pc to center of the pixel
   // and then x / width, y / height
-  glm::vec2 ndc = (glm::vec2(pixel_coord) + offset)
-                  / glm::vec2(film.getWidth(), film.getHeight());
+  glm::vec2 ndc = (glm::vec2(pixel_coord) + offset) / glm::vec2(film.getWidth(), film.getHeight());
   // reverse y
   // trnslate [0, 1] --> [-1, 1]
   ndc.y = 1.f - ndc.y;

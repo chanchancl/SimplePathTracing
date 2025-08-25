@@ -1,83 +1,26 @@
----
-BasedOnStyle: Google
+Language: Cpp # 根据你的语言选择，例如 Cpp、C、Java 等
+BasedOnStyle: LLVM # 基础风格，可选 LLVM、Google、Chromium、Mozilla、WebKit 等
 
-Language: Cpp
+# 禁用换行相关的选项
+ColumnLimit: 0 # 设置为 0，禁用基于列宽的自动换行
+PenaltyBreakAssignment: 1000000 # 极高的惩罚值，阻止赋值语句换行
+PenaltyBreakBeforeFirstCallParameter: 1000000 # 阻止函数调用参数换行
+PenaltyBreakComment: 1000000 # 阻止注释换行
+PenaltyBreakString: 1000000 # 阻止字符串换行
+PenaltyBreakTemplateDeclaration: 1000000 # 阻止模板声明换行
+PenaltyExcessCharacter: 1000000 # 阻止因字符超限导致的换行
 
-IndentWidth: 2
-TabWidth: 2
-UseTab: Never
-
-ColumnLimit: 80
-ContinuationIndentWidth: 4
-AccessModifierOffset: -2
-IndentCaseLabels: false
-IndentPPDirectives: BeforeHash
-
-SpacesBeforeTrailingComments: 2
-SpaceBeforeParens: ControlStatements
-SpaceInEmptyParentheses: false
-SpacesInCStyleCastParentheses: false
-SpaceAfterCStyleCast: true
-SpaceAroundPointerQualifiers: After
-
-PointerAlignment: Left
-ReferenceAlignment: Left
-
-AllowShortFunctionsOnASingleLine: Inline
-AllowShortBlocksOnASingleLine: true
-AllowShortIfStatementsOnASingleLine: true
-AllowShortLoopsOnASingleLine: true
-AlwaysBreakAfterReturnType: None
-AlwaysBreakTemplateDeclarations: Yes
-
-NamespaceIndentation: Inner
-
-BreakBeforeBraces: Attach
-BraceWrapping:
-  AfterClass: false
-  AfterControlStatement: false
-  AfterFunction: true
-  AfterNamespace: false
-  BeforeCatch: true
-  BeforeElse: true
-  SplitEmptyFunction: true
-  SplitEmptyRecord: true
-  SplitEmptyNamespace: true
-
-ConstructorInitializerIndentWidth: 4
-BreakConstructorInitializers: BeforeComma
-BreakBeforeBinaryOperators: NonAssignment
-
-AlignTrailingComments: true
-CommentPragmas: "^ IWYU"
-
-# IncludeBlocks: Regroup
-# IncludeCategories:
-#   - Regex: '^<.*\.h'
-#     Priority: 1
-#   - Regex: "^<.*"
-#     Priority: 2
-#   - Regex: ".*"
-#     Priority: 3
-SortIncludes: true
-
-BinPackArguments: true
-BinPackParameters: true
-PenaltyBreakBeforeFirstCallParameter: 19
-PenaltyBreakAssignment: 200
-PenaltyBreakString: 1000
-PenaltyExcessCharacter: 1000000
-PenaltyReturnTypeOnItsOwnLine: 200
-
-# C++ 特有设置
-AllowAllArgumentsOnNextLine: false
+# 允许参数等保持在一行
 AllowAllParametersOfDeclarationOnNextLine: false
-Cpp11BracedListStyle: true
-Standard: Auto
+AllowAllArgumentsOnNextLine: false
+BinPackArguments: false # 不打包函数调用参数，保持现有换行
+BinPackParameters: false # 不打包函数声明参数，保持现有换行
 
-MaxEmptyLinesToKeep: 1
-KeepEmptyLinesAtTheStartOfBlocks: false
-AlignOperands: true # 对齐数学运算符，便于阅读
-AlignAfterOpenBracket: Align # 对齐函数参数和数组初始化
----
-
+# 保留行内格式化
+AlignAfterOpenBracket: Align # 对齐括号后的内容
+AlignOperands: true # 对齐操作数
+SpacesBeforeTrailingComments: 2 # 注释前空格
+SpaceBeforeAssignmentOperators: true # 赋值运算符前后的空格
+SpaceBeforeParens: ControlStatements # 控制语句前的空格
+IndentWidth: 2 # 缩进宽度
+UseTab: Never # 使用空格而非制表符
