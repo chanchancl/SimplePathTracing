@@ -1,20 +1,20 @@
-Language: Cpp # 根据你的语言选择，例如 Cpp、C、Java 等
-BasedOnStyle: LLVM # 基础风格，可选 LLVM、Google、Chromium、Mozilla、WebKit 等
+Language: Cpp
+BasedOnStyle: LLVM
 
 # 禁用换行相关的选项
-ColumnLimit: 0 # 设置为 0，禁用基于列宽的自动换行
-PenaltyBreakAssignment: 1000000 # 极高的惩罚值，阻止赋值语句换行
+ColumnLimit: 0 # 禁用基于列宽的自动换行
+PenaltyBreakAssignment: 1000000 # 阻止赋值语句换行
 PenaltyBreakBeforeFirstCallParameter: 1000000 # 阻止函数调用参数换行
 PenaltyBreakComment: 1000000 # 阻止注释换行
 PenaltyBreakString: 1000000 # 阻止字符串换行
 PenaltyBreakTemplateDeclaration: 1000000 # 阻止模板声明换行
 PenaltyExcessCharacter: 1000000 # 阻止因字符超限导致的换行
 
-# 允许参数等保持在一行
-AllowAllParametersOfDeclarationOnNextLine: false
-AllowAllArgumentsOnNextLine: false
-BinPackArguments: false # 不打包函数调用参数，保持现有换行
-BinPackParameters: false # 不打包函数声明参数，保持现有换行
+# 参数行为调整
+AllowAllParametersOfDeclarationOnNextLine: false # 禁止函数声明参数全移到下一行
+AllowAllArgumentsOnNextLine: false # 禁止函数调用参数全移到下一行（关键改动，避免 false 单独换行）
+BinPackArguments: true # 打包函数调用参数，允许 false 与 lambda 保持同一行
+BinPackParameters: true # 打包函数声明参数，保持一致性
 
 # 保留行内格式化
 AlignAfterOpenBracket: Align # 对齐括号后的内容
@@ -24,3 +24,8 @@ SpaceBeforeAssignmentOperators: true # 赋值运算符前后的空格
 SpaceBeforeParens: ControlStatements # 控制语句前的空格
 IndentWidth: 2 # 缩进宽度
 UseTab: Never # 使用空格而非制表符
+
+# 额外设置以优化 lambda 和尾随参数
+BreakBeforeBraces: Attach # 确保大括号紧跟代码，避免额外换行
+AllowShortLambdasOnASingleLine: All # 允许短 lambda 保持单行（若适用）
+ContinuationIndentWidth: 2 # 续行缩进设置为 2，与 IndentWidth 一致

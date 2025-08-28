@@ -19,6 +19,18 @@ struct Triangle : public Shape {
 
   virtual std::optional<HitInfo> intersect(const Ray &ray, float t_min, float t_max) const override;
 
+  float centerOnAxis(int axis) const {
+    return (p0[axis] + p1[axis] + p2[axis]) / 3.f;
+  }
+
+  virtual Bounds getBounds() const override {
+    Bounds bounds{};
+    bounds.expand(p0);
+    bounds.expand(p1);
+    bounds.expand(p2);
+    return bounds;
+  }
+
   glm::vec3 p0, p1, p2;
   glm::vec3 n0, n1, n2;
 };

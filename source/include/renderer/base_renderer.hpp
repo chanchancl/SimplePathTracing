@@ -1,12 +1,11 @@
 
 #pragma once
 
-#include "camera/camera.hpp"
-#include "glm/fwd.hpp"
-#include "shape/scene.hpp"
-#include "thread/threadpool.hpp"
-#include "utils/rng.hpp"
 #include <filesystem>
+
+#include "camera/camera.hpp"
+#include "shape/scene.hpp"
+#include "utils/rng.hpp"
 
 #define DEFINE_RENDERER(Name)                                                           \
   class Name##Renderer : public BaseRenderer {                                          \

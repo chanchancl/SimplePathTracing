@@ -1,7 +1,8 @@
 #pragma once
 
-#include "thread/spinlock.hpp"
 #include <cstddef>
+
+#include "thread/spinlock.hpp"
 
 class Progress {
   size_t total, current;

@@ -7,5 +7,7 @@ project(
 
 set(CMAKE_SUPPRESS_DEVELOPER_WARNINGS TRUE CACHE BOOL "Suppress developer warnings")
 
-add_subdirectory(thridparty)
+set(CMAKE_VERBOSE_MAKEFILE ON)
+
+add_subdirectory(thirdparty)
 add_subdirectory(source)

@@ -1,11 +1,9 @@
 
 
+#include <mutex>
+
 #include "renderer/sample_rt_renderer.hpp"
 #include "utils/frame.hpp"
-
-#include <iostream>
-
-#include <mutex>
 
 std::mutex logm;
 
@@ -13,17 +11,11 @@ glm::vec3 SimpleRTRenderer::renderPixel(const glm::ivec2 &pixel_coord) {
   auto ray = camera.generateRay(pixel_coord, {rng.uniform(), rng.uniform()});
   glm::vec3 beta = {1, 1, 1};
   glm::vec3 color = {0, 0, 0};
+  size_t max_bounce_count = 32;
 
-  while (true) {
+  while (max_bounce_count--) {
     auto hit_info = scene.intersect(ray);
     if (hit_info.has_value()) {
-      // color = hit_info->material->albedo;
-      // {
-      //   std::lock_guard<std::mutex> g(logm);
-      //   // printf("%d, %d hit!, color is : %4.2f, %4.2f, %4.2f\n", pixel_coord.x, pixel_coord.y, color.r, color.g, color.b);
-      // }
-
-      // break;
       color += beta * hit_info->material->emissive;
       beta *= hit_info->material->albedo;
 

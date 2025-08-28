@@ -1,0 +1,118 @@
+Profile "Loading model models/simple_dragon.obj": 38ms
+Profile "paralleFor": 524ms
+Profile "Film::save normal.ppm": 51ms
+1spp has been saved to "normal.ppm"
+Profile "BaseRenderer::render 1spp normal.ppm": 622ms
+Profile "paralleFor": 436ms
+Profile "Film::save simpleRT.ppm": 73ms
+64spp has been saved to "simpleRT.ppm"
+Profile "BaseRenderer::render 64spp simpleRT.ppm": 81746ms
+
+
+
+Profile "Loading model models/simple_dragon.obj": 27ms
+768, 432
+Profile "paralleFor": 4ms
+Profile "Film::save normal.ppm": 56ms
+1spp has been saved to "normal.ppm"
+Profile "BaseRenderer::render 1spp normal.ppm": 473ms
+Profile "paralleFor": 0ms
+Profile "Film::save simpleRT.ppm": 48ms
+1spp has been saved to "simpleRT.ppm"
+Profile "Film::save simpleRT.ppm": 64ms
+64spp has been saved to "simpleRT.ppm"
+Profile "BaseRenderer::render 64spp simpleRT.ppm": 83749ms
+
+
+// Film::Save decrease from 50ms to 2ms
+
+Profile "Loading model models/simple_dragon.obj": 26ms
+768, 432
+Profile "paralleFor": 4ms
+Profile "BaseRenderer::render 1spp normal.ppm": 423ms
+Profile "Film::save simpleRT.ppm": 2ms
+64spp has been saved to "simpleRT.ppm"
+Profile "BaseRenderer::render 64spp simpleRT.ppm": 83264ms
+
+
+// add bounds
+
+Profile "Loading model models/simple_dragon.obj": 24ms
+768, 432
+Profile "BaseRenderer::render 1spp normal.ppm": 144ms
+Profile "BaseRenderer::render 64spp simpleRT.ppm": 24543ms
+
+
+// add BVH
+
+Profile "Loading model models/simple_dragon.obj": 31ms
+768, 432
+Profile "BaseRenderer::render 1spp normal.ppm": 56ms
+Profile "BaseRenderer::render 64spp simpleRT.ppm": 3515ms
+
+Profile "BaseRenderer::render 128spp simpleRT.ppm": 6960ms
+
+// flattern
+Profile "BaseRenderer::render 128spp simpleRT.ppm": 6944ms
+
+
+Total node count : 142643
+Leaf node count : 71322
+Triangle count: : 87130
+Mean leaf Node Triangle count : 1.22164
+Max leaf triangle count : 23
+
+// With SAH
+Total node count : 164067
+Leaf node count : 82034
+Triangle count: : 87130
+Mean leaf Node Triangle count : 1.06212
+Max leaf triangle count : 8
+Profile "Loading model models/dragon_87k.obj": 13478ms
+
+// iter all axis
+Total node count : 174195
+Leaf node count : 87098
+Triangle count: : 87130
+Mean leaf Node Triangle count : 1.00037
+Max leaf triangle count : 3
+
+// 871k model, BVH构建时间大大增长，变为 453 秒
+Total node count : 1742423
+Leaf node count : 871212
+Triangle count: : 871306
+Mean leaf Node Triangle count : 1.00011
+Max leaf triangle count : 3
+Profile "Loading model models/dragon_871k.obj": 453099ms
+1spp has been saved to "simpleRT.ppm"
+128spp has been saved to "simpleRT.ppm"
+Profile "BaseRenderer::render 128spp simpleRT.ppm": 6973ms
+
+
+// BVH build with buckets
+Total node count : 1742425
+Leaf node count : 871213
+Triangle count: : 871306
+Mean leaf Node Triangle count : 1.00011
+Max leaf triangle count : 3
+Profile "Loading model models/dragon_871k.obj": 21116ms
+
+// Change ThreadPool, 因为thread_pool 是全局变量，一开始就会启动很多线程
+Profile "Loading model models/dragon_871k.obj": 15414ms
+
+// Add BVHTreeNode allocator
+Profile "Loading model models/dragon_871k.obj": 8532ms
+
+// vector::reserve
+Profile "Loading model models/dragon_871k.obj": 6910ms
+
+
+
+// Render 100 shape
+Profile "BaseRenderer::render 128spp simpleRT.ppm": 43101ms
+
+// Scene BVH
+Profile "BaseRenderer::render 128spp simpleRT.ppm": 14174ms
+
+// 10k shape
+Profile "BaseRenderer::render 128spp simpleRT.ppm": 38431ms

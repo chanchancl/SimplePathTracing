@@ -2,7 +2,6 @@
 
 #include "camera/film.hpp"
 #include "camera/ray.hpp"
-#include "glm/fwd.hpp"
 
 class Camera {
 private:

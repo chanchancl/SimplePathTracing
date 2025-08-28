@@ -1,5 +1,5 @@
 
-#include <glm/geometric.hpp>
+#include "glm/geometric.hpp"
 
 #include "camera/ray.hpp"
 #include "shape/triangle.hpp"

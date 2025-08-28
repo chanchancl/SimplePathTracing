@@ -10,6 +10,7 @@
 
 class Task {
 public:
+  virtual ~Task() = default;
   virtual void run() = 0;
 };
 
@@ -30,7 +31,7 @@ public:
   void addTask(Task *);
   Task *getTask();
 
-  void parallelFor(size_t width, size_t height, const ParallelFunction &fun);
+  void parallelFor(size_t width, size_t height, const ParallelFunction &fun, bool complex = true);
   void wait() const;
 
   static void runTask(ThreadPool *master);

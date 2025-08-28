@@ -1,13 +1,18 @@
+#include <iostream>
+#include <string>
+
 #include "renderer/base_renderer.hpp"
 #include "thread/threadpool.hpp"
+#include "utils/profile.hpp"
 #include "utils/progress.hpp"
 
-#include <iostream>
-
 void BaseRenderer::render(size_t spp, const std::filesystem::path &filename) {
+  PROFILE("BaseRenderer::render " + std::to_string(spp) + "spp " + filename.string());
+
   size_t current_spp = 0, increase = 1;
   auto &film = camera.getFilm();
-  Progress progress(film.getWidth() * film.getHeight() * spp);
+  film.clean();
+  Progress progress(film.getWidth() * film.getHeight() * spp, 20);
   while (current_spp < spp) {
     thread_pool.parallelFor(film.getWidth(), film.getHeight(), [&](size_t x, size_t y) {
       for (int i = 0; i < increase; i++) {
