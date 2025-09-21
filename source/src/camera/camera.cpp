@@ -1,7 +1,7 @@
-#include "glm/ext/matrix_clip_space.hpp"
-#include "glm/ext/matrix_transform.hpp"
-#include "glm/geometric.hpp"
-#include "glm/trigonometric.hpp"
+#include <glm/ext/matrix_clip_space.hpp>
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/geometric.hpp>
+#include <glm/trigonometric.hpp>
 
 #include "camera/camera.hpp"
 #include "camera/ray.hpp"

@@ -1,3 +1,4 @@
+#include <filesystem>
 #include <iostream>
 #include <string>
 
@@ -8,6 +9,11 @@
 
 void BaseRenderer::render(size_t spp, const std::filesystem::path &filename) {
   PROFILE("BaseRenderer::render " + std::to_string(spp) + "spp " + filename.string());
+
+  auto output = std::filesystem::path("output");
+  if (!std::filesystem::exists(output)) {
+    std::filesystem::create_directory(output);
+  }
 
   size_t current_spp = 0, increase = 1;
   auto &film = camera.getFilm();
@@ -25,7 +31,8 @@ void BaseRenderer::render(size_t spp, const std::filesystem::path &filename) {
     current_spp += increase;
     increase = std::min<size_t>(current_spp, 32);
 
-    film.save(filename);
-    std::cout << current_spp << "spp has been saved to " << filename << std::endl;
+    auto path = std::filesystem::path("output/" + filename.string());
+    film.save(path);
+    std::cout << current_spp << "spp has been saved to " << path << std::endl;
   }
 }

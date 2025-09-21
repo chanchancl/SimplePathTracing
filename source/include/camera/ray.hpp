@@ -1,8 +1,8 @@
 #pragma once
 
-#include "glm/glm.hpp"
+#include <glm/glm.hpp>
 
-#include "shape/material.hpp"
+#include "material/material.hpp"
 #include "utils/debug_marco.hpp"
 
 struct Ray {

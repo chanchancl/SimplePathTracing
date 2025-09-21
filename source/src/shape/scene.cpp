@@ -1,5 +1,5 @@
-#include "glm/ext/matrix_transform.hpp"
-#include "glm/trigonometric.hpp"
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/trigonometric.hpp>
 
 #include "camera/ray.hpp"
 #include "shape/scene.hpp"
@@ -8,7 +8,7 @@ std::optional<HitInfo> Scene::intersect(const Ray &ray, float t_min, float t_max
   return bvh.intersect(ray, t_min, t_max);
 }
 
-void Scene::addShape(Shape &shape, const Material &material, const glm::vec3 &pos, const glm::vec3 &scale, const glm::vec3 &rotate) {
+void Scene::addShape(Shape &shape, const Material *material, const glm::vec3 &pos, const glm::vec3 &scale, const glm::vec3 &rotate) {
   glm::mat4 world_from_obj =
     glm::translate(glm::mat4(1.f), pos) *
     glm::rotate(glm::mat4(1.f), glm::radians(rotate.z), {0, 0, 1}) *

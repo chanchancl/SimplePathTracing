@@ -2,7 +2,7 @@
 
 #include <array>
 
-#include "glm/glm.hpp"
+#include <glm/glm.hpp>
 
 class RGB Lerp(const RGB &a, const RGB &b, float t);
 
@@ -20,36 +20,36 @@ public:
   }
 
   inline static RGB GenerateHeatmapRGB(float t) {
-    std::array<RGB, 25> color_pallet{
-      RGB{68, 1, 84},
-      RGB{71, 17, 100},
-      RGB{72, 31, 112},
-      RGB{71, 45, 123},
-      RGB{68, 58, 131},
+    static std::array<RGB, 25> color_pallet{
+      RGB(68, 1, 84),
+      RGB(71, 17, 100),
+      RGB(72, 31, 112),
+      RGB(71, 45, 123),
+      RGB(68, 58, 131),
 
-      RGB{64, 70, 136},
-      RGB{59, 82, 139},
-      RGB{54, 93, 141},
-      RGB{49, 104, 142},
-      RGB{44, 114, 142},
+      RGB(64, 70, 136),
+      RGB(59, 82, 139),
+      RGB(54, 93, 141),
+      RGB(49, 104, 142),
+      RGB(44, 114, 142),
 
-      RGB{40, 124, 142},
-      RGB{36, 134, 142},
-      RGB{33, 144, 140},
-      RGB{31, 154, 138},
-      RGB{32, 164, 134},
+      RGB(40, 124, 142),
+      RGB(36, 134, 142),
+      RGB(33, 144, 140),
+      RGB(31, 154, 138),
+      RGB(32, 164, 134),
 
-      RGB{39, 173, 129},
-      RGB{53, 183, 121},
-      RGB{71, 193, 110},
-      RGB{93, 200, 99},
-      RGB{117, 208, 84},
+      RGB(39, 173, 129),
+      RGB(53, 183, 121),
+      RGB(71, 193, 110),
+      RGB(93, 200, 99),
+      RGB(117, 208, 84),
 
-      RGB{143, 215, 68},
-      RGB{170, 220, 50},
-      RGB{199, 224, 32},
-      RGB{227, 228, 24},
-      RGB{253, 231, 37},
+      RGB(143, 215, 68),
+      RGB(170, 220, 50),
+      RGB(199, 224, 32),
+      RGB(227, 228, 24),
+      RGB(253, 231, 37),
     };
 
     if (t < 0 || t >= 1) {

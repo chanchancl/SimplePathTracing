@@ -6,7 +6,6 @@
 
 #include "thread/spinlock.hpp"
 #include "thread/threadpool.hpp"
-#include "utils/profile.hpp"
 
 using namespace std::chrono_literals;
 ThreadPool thread_pool{};
@@ -85,11 +84,11 @@ struct ParallelForTask : public Task {
 void ThreadPool::parallelFor(size_t width, size_t height, const ParallelFunction &fun, bool complex) {
   // PROFILE("paralleFor");
 
-  float chunk_width_float = static_cast<float>(width) / sqrt(threads.size());
-  float chunk_height_float = static_cast<float>(height) / sqrt(threads.size());
+  float chunk_width_float = static_cast<float>(width) / std::sqrt(threads.size());
+  float chunk_height_float = static_cast<float>(height) / std::sqrt(threads.size());
   if (complex) {
-    chunk_width_float /= sqrt(16);
-    chunk_height_float /= sqrt(16);
+    chunk_width_float /= std::sqrt(16);
+    chunk_height_float /= std::sqrt(16);
   }
   size_t chunk_width = std::ceil(chunk_width_float);
   size_t chunk_height = std::ceil(chunk_height_float);
